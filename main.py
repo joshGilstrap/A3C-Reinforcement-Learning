@@ -9,9 +9,9 @@ from info import HyperParameters
 from params import get_params
 
 def main():
-    best = get_params()
-    print(best)
-    print()
+    # best = get_params()
+    # print(best)
+    # print()
     # Inline loop to create all environments
     envs = SubprocVecEnv([make_env(False) for _ in range(HyperParameters["N_ENVS"])])
     envs = VecFrameStack(envs, n_stack=4)
