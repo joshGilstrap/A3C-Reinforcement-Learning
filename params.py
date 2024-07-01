@@ -17,7 +17,7 @@ def optimize_params(trial):
     envs = VecTransposeImage(envs)
     
     # Specify ranges and variables for all desired parameters
-    n_steps = trial.suggest_int('n_steps', 5, 20)
+    n_steps = trial.suggest_int('n_steps', 5, 200)
     gamma = trial.suggest_float('gamma', 0.9, 0.999)
     critic_lr = trial.suggest_float('critic_lr', 1e-5, 2.5e-4, log=True)
     actor_lr = trial.suggest_float('actor_lr', 1e-6, 1e-4, log=True)
@@ -41,7 +41,7 @@ def optimize_params(trial):
     action_dim = envs.action_space.n
     device = "cpu"
     agent = Actor3Critic(state_dim, action_dim, is_tuning=True)
-    agent.load_weights()
+    # agent.load_weights()
     
     # Mimic binary action space compatibility from training
     mapping = {}

@@ -102,16 +102,16 @@ class Actor3Critic(nn.Module):
         critic_path = (save_dir / f"critic.chkpt")
         actor_optim_path = (save_dir / f"aOptim.chkpt")
         critic_optim_path = (save_dir / f"cOptim.chkpt")
-        torch.save(agent.actor_net.state_dict(), actor_path)
-        torch.save(self.actor_optim.state_dict(), actor_optim_path)
+        torch.save(self.actor_net.state_dict(), actor_path)
+        torch.save(agent.actor_optim.state_dict(), actor_optim_path)
         torch.save(agent.critic_net.state_dict(), critic_path)
         torch.save(agent.critic_optim.state_dict(), critic_optim_path)
     
     def load_weights(self, is_training=True):
-        self.actor_net.load_state_dict(torch.load(r"./checkpoints/2024-06-23T22-31-35/actor.chkpt"))
-        self.actor_optim.load_state_dict(torch.load(r"./checkpoints/2024-06-23T22-31-35/aOptim.chkpt"))
-        self.critic_net.load_state_dict(torch.load(r"./checkpoints/2024-06-23T22-31-35/critic.chkpt"))
-        self.critic_optim.load_state_dict(torch.load(r"./checkpoints/2024-06-23T22-31-35/cOptim.chkpt"))
+        self.actor_net.load_state_dict(torch.load(r"./checkpoints/2024-07-01T08-14-24/actor.chkpt"))
+        self.actor_optim.load_state_dict(torch.load(r"./checkpoints/2024-07-01T08-14-24/aOptim.chkpt"))
+        self.critic_net.load_state_dict(torch.load(r"./checkpoints/2024-07-01T08-14-24/critic.chkpt"))
+        self.critic_optim.load_state_dict(torch.load(r"./checkpoints/2024-07-01T08-14-24/cOptim.chkpt"))
         if not is_training:
             self.actor_net.eval()
             self.critic_net.eval()

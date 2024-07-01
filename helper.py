@@ -74,46 +74,56 @@ class RetroWrapper(gym.Env):
         self.env = env
         self.action_space = self.env.action_space
         self.observation_space = self.env.observation_space
+        
+        self.prev_lives = 0
         self.prev_x_pos = 0
-        self.prev_score = 0
-        self.prev_time = 0
-        self.stuck_iter = 0
+        self.prev_coins = 0
+        self.stuck_count = 0
 
     def reset(self, seed=None, **kwargs):
         if seed is not None:
             self.env.seed(seed)
-        self.prev_x_pos = 0
-        self.prev_score = 0
-        self.prev_time = 0
-        self.stuck_iter = 0
         state = self.env.reset(**kwargs)
         return state, {}
 
     def step(self, actions):
         state, reward, done, info = self.env.step(actions)
         
-        # right incentive
-        distance = info['hpos'] - self.prev_x_pos
-        reward += distance
-        # if we're in the same place as last time, might be stuck
-        if info['hpos'] == self.prev_x_pos:
-            self.stuck_iter += 1
-        self.prev_x_pos = info['hpos']
+        # Get ROM addresses
+        memory = self.env.unwrapped.get_ram()
+        # Mario's x position
+        xpos = memory[0x086]
+        info['xpos'] = xpos
         
-        # score incentive
-        score_diff = info['score'] - self.prev_score
-        reward += score_diff * 0.01
-        self.prev_score = info['score']
-        
-        # time incentive
-        time_diff = self.prev_time - info['time']
-        reward -= time_diff
-        self.prev_time = info['time']
-        
-        # reset on death or being stuck
-        if info['lives'] < 4 or self.stuck_iter > 1000:
+        # Penalize life loss
+        if info['lives'] < self.prev_lives:
             reward -= 100
+        self.prev_lives = info['lives']
+        
+        # Reward ground covered
+        if info['xpos'] > self.prev_x_pos:
+            reward += info['xpos']
+            self.stuck_count = 0
+        # Penalize staying in place
+        if info['xpos'] == self.prev_x_pos:
+            reward -= 1
+            self.stuck_count += 1
+        self.prev_x_pos = info['xpos']
+        
+        # Reward haveing a score
+        reward += info['score'] * 0.1
+        # Reward getting coins
+        if info ['coins'] > self.prev_coins:
+            reward += info['coins']
+        self.prev_coins = info['coins']
+        
+        # Stuck for good = reset
+        if self.stuck_count > 500:
             done = True
+        
+        # Clip reward to prevent explosions
+        reward = np.clip(reward, -10, 10)
+        
         return state, reward, done, info
 
     def render(self, mode='human'):
