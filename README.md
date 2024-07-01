@@ -1,4 +1,4 @@
-# Asynchronous Advanced Actor Critic Reinforcement Learning - Super Mario Bros 3
+# Asynchronous Advanced Actor Critic Reinforcement Learning - Super Mario Bros
 
 An implementation of the A3C reinforcement leanring algorithm trained to play Super Mario Bros 3.
 
