@@ -2,7 +2,7 @@
 
 A custom implementation of the A3C reinforcement leanring algorithm trained to play Super Mario Bros. It features auto-tuned hyperparameters
 and custom reward logic to facilitate learning. It is trained in an asynchronous environment of 16 games and has been (as of this writing) 
-trained at 30,000,000 timesteps and consistently completes ~28% of World 1-1 with minimal trouble.
+trained at 40,000,000 timesteps and consistently completes ~28% of World 1-1 with minimal trouble.
 
 Technologies used:
   - PyTorch - tensors, neural networks, optimizers
@@ -10,6 +10,8 @@ Technologies used:
   - Gymnasium - environment wrappers
   - Stable Baselines3 - vectorization wrappers
   - Optuna - auto-tuning hyperparameters
+
+Learning Progression Video: https://youtu.be/KsHRXDaoiB8
 
 ## Table of Contents
 
