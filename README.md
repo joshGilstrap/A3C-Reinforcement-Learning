@@ -16,6 +16,7 @@ Learning Progression Video: https://youtu.be/KsHRXDaoiB8
 ## Table of Contents
 
 - [Installation](#installation)
+- [Demo](#demo)
 - [Usage](#usage)
 - [License](#license)
 
@@ -41,6 +42,10 @@ Learning Progression Video: https://youtu.be/KsHRXDaoiB8
     ```sh
     pip install -r requirements.txt
     ```
+
+## Demo
+
+![ezgif com-video-to-gif-converter](https://github.com/user-attachments/assets/cd2c356f-f249-4ce3-9ff0-ff1df7213e5a)
 
 ## Usage
 
